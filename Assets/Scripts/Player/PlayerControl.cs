@@ -23,9 +23,8 @@ public class PlayerControl : MonoBehaviour
     private void MovementLogic()
     {
         var moveHorizontal = Input.GetAxis("Horizontal");
-        var movement = new Vector3(moveHorizontal, 0.0f, 0.0f);
-        if (Mathf.Abs(_rigidbody.velocity.magnitude - 0.00001f) > 15.00000f) return;
-        _rigidbody.AddForce(movement * horizontalSpeed);
+        var movement = new Vector2(moveHorizontal * horizontalSpeed, _rigidbody.velocity.y);
+        _rigidbody.velocity = movement;
     }
 
     private void JumpLogic()
