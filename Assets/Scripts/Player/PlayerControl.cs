@@ -1,11 +1,10 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerControl : MonoBehaviour
 {
     public float horizontalSpeed = 10.0f;
-    public float jumpH = 1.0f;
+    public float jumpH = 200.0f;
     
     private bool _isGrounded = true;
     private Rigidbody2D _rigidbody;
@@ -25,7 +24,7 @@ public class PlayerControl : MonoBehaviour
     {
         var moveHorizontal = Input.GetAxis("Horizontal");
         var movement = new Vector3(moveHorizontal, 0.0f, 0.0f);
-        if (Math.Abs(_rigidbody.velocity.magnitude - 0.00001f) > 35.00000f) return;
+        if (Mathf.Abs(_rigidbody.velocity.magnitude - 0.00001f) > 15.00000f) return;
         _rigidbody.AddForce(movement * horizontalSpeed);
     }
 

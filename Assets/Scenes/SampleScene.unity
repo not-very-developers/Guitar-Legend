@@ -243,6 +243,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420030}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -258,6 +259,18 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
+--- !u!114 &519420030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71e385162f9fa8244b60f10bc7c00d05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -327,8 +340,8 @@ GameObject:
   - component: {fileID: 1009096053}
   - component: {fileID: 1009096052}
   m_Layer: 0
-  m_Name: Floor
-  m_TagString: Ground
+  m_Name: LWall
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -345,7 +358,7 @@ Transform:
   m_LocalScale: {x: 1, y: 10.122111, z: 1}
   m_Children: []
   m_Father: {fileID: 2074617248}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &1009096052
 BoxCollider2D:
@@ -457,7 +470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   horizontalSpeed: 10
-  jumpH: 100
+  jumpH: 200
 --- !u!50 &1044272658
 Rigidbody2D:
   serializedVersion: 4
@@ -524,7 +537,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ce452d8df9e5f634c89e9eb4f920f67d, type: 2}
+  - {fileID: 2100000, guid: 2a8eb3bea4bb30f46831ce51b7c4b663, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -582,8 +595,8 @@ GameObject:
   - component: {fileID: 2021626746}
   - component: {fileID: 2021626745}
   m_Layer: 0
-  m_Name: LWall
-  m_TagString: Wall
+  m_Name: Floor
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -600,7 +613,7 @@ Transform:
   m_LocalScale: {x: 25.352715, y: 2.037, z: 1}
   m_Children: []
   m_Father: {fileID: 2074617248}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &2021626745
 BoxCollider2D:
@@ -706,8 +719,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1009096051}
   - {fileID: 2021626744}
+  - {fileID: 1009096051}
   - {fileID: 174740126}
   m_Father: {fileID: 0}
   m_RootOrder: 2
