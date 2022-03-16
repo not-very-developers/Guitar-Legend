@@ -1,48 +1,54 @@
+using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class RayCastWeapon : MonoBehaviour {
+public class RayCastWeapon : MonoBehaviour
+{
+    private Transform _firePoint;
+    public int damage = 40;
+    public GameObject impactEffect;
+    public LineRenderer lineRenderer;
 
-	public Transform firePoint;
-	public int damage = 40;
-	public GameObject impactEffect;
-	public LineRenderer lineRenderer;
-	
-	// Update is called once per frame
-	void Update () {
-		if (Input.GetButtonDown("Fire1"))
-		{
-			StartCoroutine(Shoot());
-		}
-	}
+    private void Start()
+    {
+        _firePoint = GameObject.Find("FirePoint").transform;
+    }
 
-	IEnumerator Shoot ()
-	{
-		RaycastHit2D hitInfo = Physics2D.Raycast(firePoint.position, firePoint.right);
+    // Update is called once per frame
+    private void Update()
+    {
+        if (Input.GetButtonDown("Fire1"))
+        {
+            StartCoroutine(Shoot());
+        }
+    }
 
-		if (hitInfo)
-		{
-			Enemy enemy = hitInfo.transform.GetComponent<Enemy>();
-			if (enemy != null)
-			{
-				enemy.TakeDamage(damage);
-			}
+    private IEnumerator Shoot()
+    {
+        var hitInfo = Physics2D.Raycast(_firePoint.position, Vector2.right);
+        if (hitInfo)
+        {
+            var enemy = hitInfo.transform.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(damage);
+            }
 
-			Instantiate(impactEffect, hitInfo.point, Quaternion.identity);
+            var s = Instantiate(impactEffect, hitInfo.point, Quaternion.identity);
+            lineRenderer.SetPosition(0, _firePoint.position);
+            lineRenderer.SetPosition(1, hitInfo.point);
+            Destroy(s);
+        }
+        else
+        {
+            lineRenderer.SetPosition(0, _firePoint.position);
+            lineRenderer.SetPosition(1, _firePoint.position + _firePoint.right * 100);
+        }
 
-			lineRenderer.SetPosition(0, firePoint.position);
-			lineRenderer.SetPosition(1, hitInfo.point);
-		} else
-		{
-			lineRenderer.SetPosition(0, firePoint.position);
-			lineRenderer.SetPosition(1, firePoint.position + firePoint.right * 100);
-		}
+        lineRenderer.enabled = true;
 
-		lineRenderer.enabled = true;
+        yield return 0;
 
-		yield return 0;
-
-		lineRenderer.enabled = false;
-	}
+        lineRenderer.enabled = false;
+    }
 }

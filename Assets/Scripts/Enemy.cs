@@ -1,27 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour {
 
 	public int health = 100;
-
 	public GameObject deathEffect;
 
-	public void TakeDamage (int damage)
-	{
-		health -= damage;
+	private int _hp;
 
-		if (health <= 0)
-		{
-			Die();
-		}
+	private void Awake()
+	{
+		_hp = health;
 	}
 
-	void Die ()
+	internal void TakeDamage (int damage)
 	{
-		Instantiate(deathEffect, transform.position, Quaternion.identity);
+		_hp -= damage;
+		if (_hp <= 0) Die();
+	}
+
+	private void Die ()
+	{
+		var s = Instantiate(deathEffect, transform.position, Quaternion.identity);
 		Destroy(gameObject);
+		Destroy(s);
 	}
-
 }

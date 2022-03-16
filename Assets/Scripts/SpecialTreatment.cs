@@ -1,9 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
-
 
 public class SpecialTreatment : MonoBehaviour
 {
@@ -14,16 +9,18 @@ public class SpecialTreatment : MonoBehaviour
     private bool checkKey = false;
     public KeyCode r;
 
-    void Awake()
+    private void Awake()
     {
         pausePanel.SetActive(false);
     }
-    void SetSpecialTreatment()
+
+    private void SetSpecialTreatment()
     {
         pausePanel.SetActive(true);
         Time.timeScale = 0.00001f;
     }
-    void SpecialTreatmentOff()
+
+    private void SpecialTreatmentOff()
     {
         pausePanel.SetActive(false);
         Time.timeScale = 1;
@@ -46,8 +43,8 @@ public class SpecialTreatment : MonoBehaviour
         }
         if (checkKey)
         {
-            curr_time -= (Time.deltaTime* 10000); /* Вычитаем из repeatTime время кадра (оно в миллисекундах) */
-            if (curr_time <= kdTime) /* Время вышло пишем */
+            curr_time -= (Time.deltaTime* 10000); /* пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ repeatTime пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ (пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ) */
+            if (curr_time <= kdTime) /* пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ */
             {
                 SpecialTreatmentOff();
                 if(curr_time <= 0)
