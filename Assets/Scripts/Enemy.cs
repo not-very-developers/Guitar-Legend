@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour {
 		if (_hp <= 0) Die();
 	}
 
-	private void Die ()
+	private void Die()
 	{
 		var s = Instantiate(deathEffect, transform.position, Quaternion.identity);
 		Destroy(gameObject);
