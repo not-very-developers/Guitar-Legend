@@ -1,60 +1,65 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections;
-
 
 public class SpecialTreatment : MonoBehaviour
 {
     public GameObject pausePanel;
     public float repeatTime;
     public float kdTime;
-    public float curr_time;
-    private bool checkKey = false;
-    public KeyCode r;
+    public KeyCode keySpecial;
 
-    void Awake()
+    private float curr_time;
+    private bool checkKey = false;
+    private float curr_kd;
+
+    private Scrollbar progresBar;
+
+    public float min = 80f;
+    public float max = 320f;
+
+    private void Awake()
     {
         pausePanel.SetActive(false);
+        curr_kd = 0f;
+        progresBar = pausePanel.transform.GetChild(0).GetChild(2).gameObject
+            .GetComponent<Scrollbar>();
     }
-    void SetSpecialTreatment()
+
+    private void Update()
+    {
+        if (curr_kd > 0)
+        {
+            curr_kd -= Time.deltaTime;
+            return;
+        }
+
+        if (Input.GetKey(keySpecial) && !checkKey)
+        {
+            SetSpecialTreatment();
+            curr_time = repeatTime;
+            checkKey = true;
+        }
+
+        if (!checkKey) return;
+
+        curr_time -= Time.unscaledDeltaTime;
+        progresBar.size = curr_time / 3;
+        if (!(curr_time <= 0)) return;
+
+        SpecialTreatmentOff();
+        checkKey = false;
+    }
+
+    private void SetSpecialTreatment()
     {
         pausePanel.SetActive(true);
-        Time.timeScale = 0.00001f;
+        Time.timeScale = 0;
     }
-    void SpecialTreatmentOff()
+
+    private void SpecialTreatmentOff()
     {
         pausePanel.SetActive(false);
         Time.timeScale = 1;
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKey(r) && !checkKey)
-        {
-            
-            SetSpecialTreatment();
-            curr_time = repeatTime + kdTime;
-            checkKey = true;
-        }
-        if (checkKey)
-        {
-            curr_time -= (Time.deltaTime* 10000); /* Вычитаем из repeatTime время кадра (оно в миллисекундах) */
-            if (curr_time <= kdTime) /* Время вышло пишем */
-            {
-                SpecialTreatmentOff();
-                if(curr_time <= 0)
-                {
-                    checkKey = false;
-                } 
-            }
-        }
+        curr_kd = kdTime;
     }
 }

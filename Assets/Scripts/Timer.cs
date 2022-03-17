@@ -1,22 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Timer : MonoBehaviour
 {
     // Start is called before the first frame update
-    public float timestart = 60;
+    public float timeStart = 60;
+    private float _curTime;
     public Text tx;
-    void Start()
+
+    private void Start()
     {
-        tx.text = timestart.ToString();
+        _curTime = timeStart;
+        Debug.Log(_curTime.ToString("F"));
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        timestart -= Time.deltaTime;
-        tx.text = timestart.ToString();
+        _curTime -= Time.unscaledDeltaTime;
+        Debug.Log(_curTime.ToString("F"));
     }
 }

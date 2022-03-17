@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class CharacterController2D : MonoBehaviour
 {
 	[SerializeField] private float m_JumpForce = 400f;							// Amount of force added when the player jumps.
@@ -19,44 +21,40 @@ public class CharacterController2D : MonoBehaviour
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 m_Velocity = Vector3.zero;
 
+	[FormerlySerializedAs("OnLandEvent")]
 	[Header("Events")]
 	[Space]
 
-	public UnityEvent OnLandEvent;
+	public UnityEvent onLandEvent;
 
 	[System.Serializable]
 	public class BoolEvent : UnityEvent<bool> { }
 
-	public BoolEvent OnCrouchEvent;
+	[FormerlySerializedAs("OnCrouchEvent")] public BoolEvent onCrouchEvent;
 	private bool m_wasCrouching = false;
 
 	private void Awake()
 	{
 		m_Rigidbody2D = GetComponent<Rigidbody2D>();
 
-		if (OnLandEvent == null)
-			OnLandEvent = new UnityEvent();
-
-		if (OnCrouchEvent == null)
-			OnCrouchEvent = new BoolEvent();
+		onLandEvent ??= new UnityEvent();
+		onCrouchEvent ??= new BoolEvent();
 	}
 
 	private void FixedUpdate()
 	{
-		bool wasGrounded = m_Grounded;
+		var wasGrounded = m_Grounded;
 		m_Grounded = false;
 
 		// The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
 		// This can be done using layers instead but Sample Assets will not overwrite your project settings.
-		Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
-		for (int i = 0; i < colliders.Length; i++)
+		var colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
+		foreach (var t in colliders)
 		{
-			if (colliders[i].gameObject != gameObject)
-			{
-				m_Grounded = true;
-				if (!wasGrounded)
-					OnLandEvent.Invoke();
-			}
+			if (t.gameObject == gameObject) continue;
+			m_Grounded = true;
+			if (!wasGrounded)
+				onLandEvent.Invoke();
 		}
 	}
 
@@ -83,7 +81,7 @@ public class CharacterController2D : MonoBehaviour
 				if (!m_wasCrouching)
 				{
 					m_wasCrouching = true;
-					OnCrouchEvent.Invoke(true);
+					onCrouchEvent.Invoke(true);
 				}
 
 				// Reduce the speed by the crouchSpeed multiplier
@@ -101,7 +99,7 @@ public class CharacterController2D : MonoBehaviour
 				if (m_wasCrouching)
 				{
 					m_wasCrouching = false;
-					OnCrouchEvent.Invoke(false);
+					onCrouchEvent.Invoke(false);
 				}
 			}
 
@@ -124,12 +122,11 @@ public class CharacterController2D : MonoBehaviour
 			}
 		}
 		// If the player should jump...
-		if (m_Grounded && jump)
-		{
-			// Add a vertical force to the player.
-			m_Grounded = false;
-			m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
-		}
+		if (!m_Grounded || !jump) return;
+		
+		// Add a vertical force to the player.
+		m_Grounded = false;
+		m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
 	}
 
 

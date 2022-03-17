@@ -1,30 +1,49 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour {
+[RequireComponent(typeof(Rigidbody2D))]
+public class Bullet : MonoBehaviour
+{
+    public float speed = 20f;
+    public int damage = 40;
+    public GameObject impactEffect;
+    private Rigidbody2D _rb;
 
-	public float speed = 20f;
-	public int damage = 40;
-	public Rigidbody2D rb;
-	public GameObject impactEffect;
+    // Use this for initialization
+    private void Start()
+    {
+        _rb = GetComponent<Rigidbody2D>();
+        var player = GameObject.Find("Player");
+        if (Math.Abs(player.transform.rotation.y + 1) < 0.000001)
+            _rb.velocity = Vector2.left * speed;
+        else
+            _rb.velocity = Vector2.right * speed;
+    }
 
-	// Use this for initialization
-	void Start () {
-		rb.velocity = transform.right * speed;
-	}
+    private void FixedUpdate()
+    {
+        Destroy(gameObject, 2.0f);
+    }
 
-	void OnTriggerEnter2D (Collider2D hitInfo)
-	{
-		Enemy enemy = hitInfo.GetComponent<Enemy>();
-		if (enemy != null)
-		{
-			enemy.TakeDamage(damage);
-		}
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        Debug.Log(col.gameObject.tag);
+        Die();
+    }
 
-		Instantiate(impactEffect, transform.position, transform.rotation);
+    private void OnTriggerEnter2D(Collider2D hitInfo)
+    { 
+        if (hitInfo.CompareTag("Ground")) Die();
+        if (!hitInfo.TryGetComponent(out Enemy enemy)) return;
+        enemy.TakeDamage(damage);
+        Die();
+    }
 
-		Destroy(gameObject);
-	}
-	
+    private void Die()
+    {
+        var transform1 = transform;
+        var s = Instantiate(impactEffect, transform1.position, transform1.rotation);
+        Destroy(gameObject);
+        Destroy(s, 1.0f);
+    }
 }

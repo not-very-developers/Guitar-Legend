@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
@@ -8,30 +6,23 @@ public class PlayerMovement : MonoBehaviour {
 
 	public float runSpeed = 40f;
 
-	float horizontalMove = 0f;
-	bool jump = false;
-	bool crouch = false;
+	private float _horizontalMove;
+	private bool _jump;
+	private bool _crouch;
 
-	// Update is called once per frame
-	void Update () {
-
-		horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
-		 
+	private void Update () {
+		_horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 		//animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
-
 		if (Input.GetButtonDown("Jump"))
 		{
-			jump = true;
+			_jump = true;
 			//animator.SetBool("IsJumping", true);
 		}
 
-		if (Input.GetButtonDown("Crouch"))
-		{
-			crouch = true;
-		} else if (Input.GetButtonUp("Crouch"))
-		{
-			crouch = false;
-		}
+		if (Input.GetButtonDown("Crouch")) 
+			_crouch = true;
+		else if (Input.GetButtonUp("Crouch"))
+			_crouch = false;
 
 	}
 
@@ -45,10 +36,9 @@ public class PlayerMovement : MonoBehaviour {
 		//animator.SetBool("IsCrouching", isCrouching);
 	}
 
-	void FixedUpdate ()
+	private void FixedUpdate ()
 	{
-		// Move our character
-		controller.Move(horizontalMove * Time.fixedDeltaTime, crouch, jump);
-		jump = false;
+		controller.Move(_horizontalMove * Time.fixedDeltaTime, _crouch, _jump);
+		_jump = false;
 	}
 }
