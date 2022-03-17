@@ -32,11 +32,9 @@ public class Bullet : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D hitInfo)
-    {
-        var enemy = hitInfo.GetComponent<Enemy>();
+    { 
         if (hitInfo.CompareTag("Ground")) Die();
-        if (enemy == null) return;
-        
+        if (!hitInfo.TryGetComponent(out Enemy enemy)) return;
         enemy.TakeDamage(damage);
         Die();
     }

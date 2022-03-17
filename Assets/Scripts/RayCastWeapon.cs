@@ -13,7 +13,7 @@ public class RayCastWeapon : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && Time.timeScale > 0.5)
         {
             Instantiate(bullet, _firePoint.position, _firePoint.rotation);
         }
