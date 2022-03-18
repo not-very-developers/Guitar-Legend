@@ -7,10 +7,9 @@ public class RayCastWeapon : MonoBehaviour
 
     private void Start()
     {
-        _firePoint = GameObject.Find("FirePoint").transform;
+        _firePoint = transform.GetChild(2);
     }
 
-    // Update is called once per frame
     private void Update()
     {
         if (Input.GetButtonDown("Fire1") && Time.timeScale > 0.5)

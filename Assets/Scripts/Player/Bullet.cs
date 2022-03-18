@@ -19,22 +19,16 @@ public class Bullet : MonoBehaviour
         else
             _rb.velocity = Vector2.right * speed;
     }
-
+    
     private void FixedUpdate()
     {
         Destroy(gameObject, 2.0f);
     }
 
-    private void OnCollisionEnter2D(Collision2D col)
-    {
-        Debug.Log(col.gameObject.tag);
-        Die();
-    }
-
     private void OnTriggerEnter2D(Collider2D hitInfo)
     { 
         if (hitInfo.CompareTag("Ground")) Die();
-        if (!hitInfo.TryGetComponent(out Enemy enemy)) return;
+        if (!hitInfo.TryGetComponent(out EnemyHealth enemy)) return;
         enemy.TakeDamage(damage);
         Die();
     }

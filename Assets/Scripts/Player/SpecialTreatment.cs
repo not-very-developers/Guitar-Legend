@@ -43,7 +43,8 @@ public class SpecialTreatment : MonoBehaviour
         if (!checkKey) return;
 
         curr_time -= Time.unscaledDeltaTime;
-        progresBar.size = curr_time / 3;
+        progresBar.size = curr_time / repeatTime;
+        
         if (!(curr_time <= 0)) return;
 
         SpecialTreatmentOff();
