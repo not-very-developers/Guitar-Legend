@@ -5,7 +5,9 @@ using UnityEngine.Serialization;
 [RequireComponent(typeof(Rigidbody2D))]
 public class CharacterController2D : MonoBehaviour
 {
-	[SerializeField] private float m_JumpForce = 400f;							// Amount of force added when the player jumps.
+	[SerializeField] private float m_JumpForce = 400f;                          // Amount of force added when the player jumps.
+	public int DashImpulse = 5000;
+	public KeyCode keyDash;
 	[Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;			// Amount of maxSpeed applied to crouching movement. 1 = 100%
 	[Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;	// How much to smooth out the movement
 	[SerializeField] private bool m_AirControl = false;							// Whether or not a player can steer while jumping;
@@ -20,6 +22,7 @@ public class CharacterController2D : MonoBehaviour
 	private Rigidbody2D m_Rigidbody2D;
 	private bool m_FacingRight = true;  // For determining which way the player is currently facing.
 	private Vector3 m_Velocity = Vector3.zero;
+	private bool lockDash = false;
 
 	[FormerlySerializedAs("OnLandEvent")]
 	[Header("Events")]
@@ -39,6 +42,11 @@ public class CharacterController2D : MonoBehaviour
 
 		onLandEvent ??= new UnityEvent();
 		onCrouchEvent ??= new BoolEvent();
+	}
+
+	private void Update()
+	{
+		Dash();
 	}
 
 	private void FixedUpdate()
@@ -136,5 +144,30 @@ public class CharacterController2D : MonoBehaviour
 		m_FacingRight = !m_FacingRight;
 
 		transform.Rotate(0f, 180f, 0f);
+	}
+
+	private void Dash()
+	{
+		if (Input.GetKey(keyDash) && !lockDash)
+		{
+			lockDash = true;
+			Invoke("DashLock", 3f);
+			//остановка текущей анимации
+			//смена анимации на анимацию рывка
+			m_Rigidbody2D.velocity = new Vector2(0, 0);
+
+			if (!m_FacingRight)
+			{
+				m_Rigidbody2D.AddForce(Vector2.left * DashImpulse);
+			}
+			else { m_Rigidbody2D.AddForce(Vector2.right * DashImpulse); }
+
+
+		}
+	}
+
+	private void DashLock()
+	{
+		lockDash = false;
 	}
 }
