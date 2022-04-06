@@ -167,13 +167,13 @@ public class CharacterController2D : MonoBehaviour
         //��������� ������� ��������
         //����� �������� �� �������� �����
         m_Rigidbody2D.velocity = new Vector2(0, 0);
-        if (!m_FacingRight)
+        if (m_FacingRight)
         {
-            m_Rigidbody2D.AddForce(Vector2.left * DashImpulse);
+            m_Rigidbody2D.AddForce(Vector2.right * DashImpulse);
         }
         else
         {
-            m_Rigidbody2D.AddForce(Vector2.right * DashImpulse);
+            m_Rigidbody2D.AddForce(Vector2.left * DashImpulse);
         }
         _health.enabled = false;
     }
