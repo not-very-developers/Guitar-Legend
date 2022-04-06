@@ -183,7 +183,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 40152486}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.8240004, y: -7.836, z: -10}
+  m_LocalPosition: {x: -3.8240006, y: -8.18, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1072766135}
@@ -592,7 +592,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_JumpForce: 1100
-  DashImpulse: 7000
+  DashImpulse: 5000
   keyDash: 304
   m_CrouchSpeed: 0.4
   m_MovementSmoothing: 0.05
@@ -602,7 +602,9 @@ MonoBehaviour:
     m_Bits: 567
   m_GroundCheck: {fileID: 1007352555}
   m_CeilingCheck: {fileID: 1574803884}
-  m_CrouchDisableCollider: {fileID: 471587740}
+  m_CrouchDisableCollider: {fileID: 0}
+  m_DashKD: 3
+  m_DashInvTime: 1
   onLandEvent:
     m_PersistentCalls:
       m_Calls:
