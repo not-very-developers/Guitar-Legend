@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(RayCastWeapon))]
 public class SpecialTreatment : MonoBehaviour
 {
     public GameObject pausePanel;
@@ -12,8 +13,11 @@ public class SpecialTreatment : MonoBehaviour
     private bool checkKey = false;
     private float curr_kd;
 
-    private Scrollbar progresBar;
-
+    private Scrollbar _progressBar;
+    private InputField _inputField;
+    private RayCastWeapon _weapon;
+    private SpecialList _list;
+    
     public float min = 80f;
     public float max = 320f;
 
@@ -21,8 +25,11 @@ public class SpecialTreatment : MonoBehaviour
     {
         pausePanel.SetActive(false);
         curr_kd = 0f;
-        progresBar = pausePanel.transform.GetChild(0).GetChild(2).gameObject
+        _progressBar = pausePanel.transform.GetChild(0).GetChild(2).gameObject
             .GetComponent<Scrollbar>();
+        _inputField = pausePanel.transform.GetChild(0).GetChild(0).GetComponent<InputField>();
+        _weapon = GameObject.Find("Player").GetComponent<RayCastWeapon>();
+        _list = GameObject.Find("Player").GetComponent<SpecialList>();
     }
 
     private void Update()
@@ -32,18 +39,24 @@ public class SpecialTreatment : MonoBehaviour
             curr_kd -= Time.deltaTime;
             return;
         }
-
         if (Input.GetKey(keySpecial) && !checkKey)
         {
             SetSpecialTreatment();
             curr_time = repeatTime;
             checkKey = true;
         }
-
         if (!checkKey) return;
 
+        if (Input.GetKey(KeyCode.Space))
+        {
+            var text = _inputField.text.Remove(_inputField.text.Length-1);
+            if (_list.TryGet(text, out var specialFire))
+                _weapon.Impact(specialFire);
+            SpecialTreatmentOff();
+            return;
+        }
         curr_time -= Time.unscaledDeltaTime;
-        progresBar.size = curr_time / repeatTime;
+        _progressBar.size = curr_time / repeatTime;
         
         if (!(curr_time <= 0)) return;
 
@@ -54,12 +67,15 @@ public class SpecialTreatment : MonoBehaviour
     private void SetSpecialTreatment()
     {
         pausePanel.SetActive(true);
+        _inputField.ActivateInputField();
+        _inputField.text = "";
         Time.timeScale = 0;
     }
 
     private void SpecialTreatmentOff()
     {
         pausePanel.SetActive(false);
+        _inputField.DeactivateInputField();
         Time.timeScale = 1;
         curr_kd = kdTime;
     }
