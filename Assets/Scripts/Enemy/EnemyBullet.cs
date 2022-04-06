@@ -29,6 +29,7 @@ public class EnemyBullet : MonoBehaviour
     { 
         if (hitInfo.CompareTag("Ground")) Die();
         if (!hitInfo.TryGetComponent(out Health enemy)) return;
+        if (!enemy.enabled) return;
         enemy.TakeDamage();
         Die();
     }
