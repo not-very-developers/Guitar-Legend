@@ -1,13 +1,16 @@
+using GuitarLegeng.Special;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(RayCastWeapon))]
+namespace GuitarLegeng.Player
+{
+    [RequireComponent(typeof(RayCastWeapon))]
 public class SpecialTreatment : MonoBehaviour
 {
-    public GameObject pausePanel;
-    public float repeatTime;
-    public float kdTime;
-    public KeyCode keySpecial;
+    [SerializeField] private GameObject pausePanel;
+    [SerializeField] private float repeatTime;
+    [SerializeField] private float kdTime;
+    [SerializeField] private KeyCode keySpecial;
 
     private float curr_time;
     private bool checkKey = false;
@@ -18,8 +21,8 @@ public class SpecialTreatment : MonoBehaviour
     private RayCastWeapon _weapon;
     private SpecialList _list;
     
-    public float min = 80f;
-    public float max = 320f;
+    [SerializeField] private float min = 80f;
+    [SerializeField] private float max = 320f;
 
     private void Awake()
     {
@@ -79,4 +82,5 @@ public class SpecialTreatment : MonoBehaviour
         Time.timeScale = 1;
         curr_kd = kdTime;
     }
+}
 }

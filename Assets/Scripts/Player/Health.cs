@@ -2,31 +2,34 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class Health : MonoBehaviour
+namespace GuitarLegeng.Player
 {
-    public int maxHp = 3;
-    private int _currHp;
-
-    private void Start()
+    public class Health : MonoBehaviour
     {
-        _currHp = maxHp;
-    }
+        [SerializeField] private int maxHp = 3;
+        private int _currHp;
 
-    internal void TakeDamage()
-    {
-        _currHp--;
-        if (_currHp <= 0) Die();
-    }
+        private void Start()
+        {
+            _currHp = maxHp;
+        }
 
-    private void Die()
-    {
-        var s = GetComponent<PlayerMovement>();
-        s.enabled = false;
-        Destroy(gameObject, 1.0f);
-    }
+        internal void TakeDamage()
+        {
+            _currHp--;
+            if (_currHp <= 0) Die();
+        }
 
-    private void OnDestroy()
-    {
-        SceneManager.LoadScene("Main");
+        private void Die()
+        {
+            var s = GetComponent<PlayerMovement>();
+            s.enabled = false;
+            Destroy(gameObject, 1.0f);
+        }
+
+        private void OnDestroy()
+        {
+            SceneManager.LoadScene("Main");
+        }
     }
 }

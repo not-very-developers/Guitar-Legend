@@ -1,16 +1,19 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class SpecialList : MonoBehaviour
+namespace GuitarLegeng.Special
 {
-    private Dictionary<string, GameObject> _specialFires;
-    [SerializeField] private GameObject testFire;
-
-    public void Start()
+    public class SpecialList : MonoBehaviour
     {
-        _specialFires = new Dictionary<string, GameObject>(new Dictionary<string, GameObject>
-            {{"wasd", testFire}});
+        private Dictionary<string, GameObject> _specialFires;
+        [SerializeField] private GameObject testFire;
+    
+        private void Start()
+        {
+            _specialFires = new Dictionary<string, GameObject>(new Dictionary<string, GameObject>
+                {{"wasd", testFire}});
+        }
+    
+        internal bool TryGet(string kod, out GameObject fire) => _specialFires.TryGetValue(kod, out fire);
     }
-
-    public bool TryGet(string kod, out GameObject fire) => _specialFires.TryGetValue(kod, out fire);
 }

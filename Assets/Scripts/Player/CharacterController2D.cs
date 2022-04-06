@@ -2,12 +2,14 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
 
-[RequireComponent(typeof(Rigidbody2D), typeof(Health))]
+namespace GuitarLegeng.Player
+{
+    [RequireComponent(typeof(Rigidbody2D), typeof(Health))]
 public class CharacterController2D : MonoBehaviour
 {
     [SerializeField] private float m_JumpForce = 400f; // Amount of force added when the player jumps.
-    public int DashImpulse = 5000;
-    public KeyCode keyDash;
+    [SerializeField] private int DashImpulse = 5000;
+    [SerializeField] private KeyCode keyDash;
 
     [Range(0, 1)] [SerializeField]
     private float m_CrouchSpeed = .36f; // Amount of maxSpeed applied to crouching movement. 1 = 100%
@@ -164,8 +166,6 @@ public class CharacterController2D : MonoBehaviour
         lockDash = true;
         Invoke(nameof(DashLock), m_DashKD);
         Invoke(nameof(ChangeInvis), m_DashInvTime);
-        //��������� ������� ��������
-        //����� �������� �� �������� �����
         m_Rigidbody2D.velocity = new Vector2(0, 0);
         if (m_FacingRight)
         {
@@ -181,4 +181,5 @@ public class CharacterController2D : MonoBehaviour
     private void DashLock() => lockDash = false;
 
     private void ChangeInvis() => _health.enabled = true;
+}
 }
