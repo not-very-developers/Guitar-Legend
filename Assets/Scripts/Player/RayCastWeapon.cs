@@ -7,14 +7,22 @@ public class RayCastWeapon : MonoBehaviour
 
     private void Start()
     {
-        _firePoint = transform.GetChild(2);
+        _firePoint = GameObject.Find("PlayerFirePoint").transform;
     }
 
     private void Update()
     {
-        if (Input.GetButtonDown("Fire1") && Time.timeScale > 0.5)
-        {
-            Instantiate(bullet, _firePoint.position, _firePoint.rotation);
-        }
+        if (!Input.GetButtonDown("Fire1") || !(Time.timeScale > 0.5)) return;
+        Impact();
+    }
+
+    private void Impact()
+    {
+        Instantiate(bullet, _firePoint.position, _firePoint.rotation);
+    }
+    
+    public void Impact(GameObject obj)
+    {
+        Instantiate(obj, _firePoint.position, _firePoint.rotation);
     }
 }

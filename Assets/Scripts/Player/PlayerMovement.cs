@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour {
 	private bool _crouch;
 
 	private void Update () {
+		if (Time.timeScale <= 0.5) return;
 		_horizontalMove = Input.GetAxisRaw("Horizontal") * runSpeed;
 		//animator.SetFloat("Speed", Mathf.Abs(horizontalMove));
 		if (Input.GetButtonDown("Jump"))

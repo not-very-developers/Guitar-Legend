@@ -59,6 +59,7 @@ public class CharacterController2D : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (Time.timeScale <= 0.5) return;
         var wasGrounded = m_Grounded;
         m_Grounded = false;
 

@@ -450,6 +450,7 @@ GameObject:
   - component: {fileID: 471587736}
   - component: {fileID: 471587735}
   - component: {fileID: 471587737}
+  - component: {fileID: 471587744}
   m_Layer: 8
   m_Name: Player
   m_TagString: Untagged
@@ -687,6 +688,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &471587744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 471587734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ad3612f354c47ecb077b47854e8f28d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  testFire: {fileID: 519824592943280182, guid: cd185b8095b10c74d84dc125eaace9ab, type: 3}
 --- !u!1 &642016379
 GameObject:
   m_ObjectHideFlags: 0
@@ -697,7 +711,7 @@ GameObject:
   m_Component:
   - component: {fileID: 642016380}
   m_Layer: 8
-  m_Name: FirePoint
+  m_Name: PlayerFirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1274,7 +1288,7 @@ GameObject:
   - component: {fileID: 1000398610}
   - component: {fileID: 1000398613}
   - component: {fileID: 1000398614}
-  - component: {fileID: 1000398615}
+  - component: {fileID: 1000398616}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1400,7 +1414,7 @@ MonoBehaviour:
   keySpecial: 114
   min: 80
   max: 320
---- !u!114 &1000398615
+--- !u!114 &1000398616
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1409,11 +1423,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000398609}
   m_Enabled: 0
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb57f984b22187d49ba7d08d17b1f007, type: 3}
+  m_Script: {fileID: 11500000, guid: c9f2e3da3d0d1de4491739e280d1ce7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeStart: 60
-  tx: {fileID: 0}
+  bullet: {fileID: 0}
 --- !u!1 &1007352554
 GameObject:
   m_ObjectHideFlags: 0
